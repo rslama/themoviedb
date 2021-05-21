@@ -3,11 +3,16 @@ plugins {
     id 'kotlin-android'
 }
 
+def privateProperties = new Properties()
+privateProperties.load(new FileInputStream(rootProject.file("private.properties")))
+
 android {
     compileSdk 30
     buildToolsVersion "30.0.3"
 
     defaultConfig {
+        buildConfigField "String", "app_id", privateProperties['API_KEY']
+
         applicationId "com.slama.themoviecatalog"
         minSdk 21
         targetSdk 30
