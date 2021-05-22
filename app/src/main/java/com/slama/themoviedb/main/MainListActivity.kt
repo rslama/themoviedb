@@ -12,6 +12,7 @@ import com.slama.remote.data.local.MovieOverview
 import com.slama.remote.utils.Schedulers
 import com.slama.themoviedb.BuildConfig
 import com.slama.themoviedb.R
+import com.slama.themoviedb.detail.MovieDetailActivity
 import com.slama.themoviedb.main.adapter.MainListAdapter
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import timber.log.Timber
@@ -23,7 +24,9 @@ class MainListActivity : AppCompatActivity() {
     private val disposables = CompositeDisposable()
 
     private val adapter by lazy {
-        MainListAdapter(resources.getString(R.string.base_image_url))
+        MainListAdapter(
+            resources.getString(R.string.base_image_url)
+        ) { movieOverview -> viewModel.openDetail(movieOverview) }
     }
 
     private val schedulers by lazy {
@@ -77,11 +80,20 @@ class MainListActivity : AppCompatActivity() {
         when (state) {
             is MainListState.Success -> updateDataset(state.result)
             is MainListState.Fail -> renderError(state.error)
+            is MainListState.Loading,
+            is MainListState.DetailOpened -> { /*no-op*/
+            }
+            is MainListState.OpenDetail -> openMovieDetail(state.movieOverview)
         }
     }
 
+    private fun openMovieDetail(movieOverview: MovieOverview) {
+        startActivity(MovieDetailActivity.createIntent(this, movieOverview))
+        viewModel.detailOpened()
+    }
+
     private fun renderError(error: String) {
-        Timber.d("Error state render")
+        errorView.text = error
     }
 
     private fun updateDataset(result: List<MovieOverview>) {

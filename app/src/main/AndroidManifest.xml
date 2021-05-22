@@ -10,6 +10,7 @@
         android:supportsRtl="true"
         android:name=".TheMovieDBApplication"
         android:theme="@style/Theme.TheMovieDB">
+
         <activity
             android:name=".main.MainListActivity"
             android:exported="true">
@@ -19,6 +20,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity android:name=".detail.MovieDetailActivity" />
     </application>
 
 </manifest>

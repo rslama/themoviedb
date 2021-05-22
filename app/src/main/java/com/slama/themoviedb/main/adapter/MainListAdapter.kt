@@ -6,15 +6,23 @@ import androidx.recyclerview.widget.RecyclerView
 import com.slama.remote.data.local.MovieOverview
 import com.slama.themoviedb.R
 
-class MainListAdapter(private val baseImageUrl: String) : RecyclerView.Adapter<MainMovieViewHolder>() {
+class MainListAdapter(
+    private val baseImageUrl: String,
+    private val onItemClick: (MovieOverview) -> Unit,
+) :
+    RecyclerView.Adapter<MainMovieViewHolder>() {
 
     private val items = mutableListOf<MovieOverview>()
-
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainMovieViewHolder {
         val view =
             LayoutInflater.from(parent.context).inflate(R.layout.item_movie_overview, parent, false)
-        return MainMovieViewHolder(view, baseImageUrl)
+
+        return MainMovieViewHolder(
+            view,
+            { onItemClick(items[it]) },
+            baseImageUrl
+        )
     }
 
     override fun onBindViewHolder(holder: MainMovieViewHolder, position: Int) {

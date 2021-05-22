@@ -27,4 +27,17 @@ sealed class MainListState {
         override val dataView: Boolean = false,
         override val errorView: Boolean = true
     ) : MainListState()
+
+    data class OpenDetail(
+        val movieOverview: MovieOverview,
+        override val loadingView: Boolean = false,
+        override val dataView: Boolean = true,
+        override val errorView: Boolean = false,
+    ) : MainListState()
+
+    data class DetailOpened(
+        override val loadingView: Boolean = false,
+        override val dataView: Boolean = true,
+        override val errorView: Boolean = false
+    ) : MainListState()
 }

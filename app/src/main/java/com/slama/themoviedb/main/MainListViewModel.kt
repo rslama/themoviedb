@@ -16,6 +16,7 @@ class MainListViewModel(
 
     private val publish = BehaviorSubject.create<MainListState>()
     private val disposables = CompositeDisposable()
+    private var lastState: MainListState = MainListState.Loading()
 
     init {
         publish.onNext(MainListState.Loading())
@@ -28,7 +29,33 @@ class MainListViewModel(
             .compose(schedulers.observableTransformer())
     }
 
-    internal fun loadMovies() {
+    internal fun openDetail(movieOverview: MovieOverview) {
+
+        val newState = MainListState.OpenDetail(
+            movieOverview,
+            lastState.loadingView,
+            lastState.dataView,
+            lastState.errorView
+        )
+
+        publish.onNext(newState)
+        lastState = newState
+
+    }
+
+    internal fun detailOpened() {
+
+        val newState = MainListState.DetailOpened(
+            lastState.loadingView,
+            lastState.dataView,
+            lastState.errorView
+        )
+        publish.onNext(newState)
+        lastState = newState
+
+    }
+
+    private fun loadMovies() {
 
         repository
             .getListOfMovies()
@@ -38,14 +65,18 @@ class MainListViewModel(
     }
 
     private fun publishState(result: Result<List<MovieOverview>>) {
-        when (result.isError) {
-            true -> publish.onNext(MainListState.Fail(result.errorMessage ?: ""))
-            else -> publish.onNext(MainListState.Success(result.value))
+        val state: MainListState = when (result.isError) {
+            true -> MainListState.Fail(result.errorMessage ?: "")
+            else -> MainListState.Success(result.value)
         }
+        this.lastState = state
+        publish.onNext(state)
     }
 
     override fun onCleared() {
         super.onCleared()
         disposables.clear()
     }
+
+
 }

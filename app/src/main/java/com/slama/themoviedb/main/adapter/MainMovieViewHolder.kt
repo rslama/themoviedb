@@ -11,8 +11,15 @@ import com.slama.themoviedb.R
 
 class MainMovieViewHolder(
     itemView: View,
+    onItemClickListener: (Int) -> Unit,
     private val baseImageUrl: String
 ) : RecyclerView.ViewHolder(itemView) {
+
+    init {
+        itemView.setOnClickListener {
+            onItemClickListener(adapterPosition)
+        }
+    }
 
     private val movieImageView = itemView.findViewById<ImageView>(R.id.item_movie_image)
     private val titleView = itemView.findViewById<TextView>(R.id.item_movie_title)
