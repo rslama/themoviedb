@@ -9,7 +9,7 @@ internal data class RemoteNowPlayingMovie(
     val title: String,
     val overview: String,
     val adult: Boolean,
-    val genres: List<Int>,
+    val genre_ids: List<Int>,
     val original_language: String,
     val backdrop_path: String,
     val poster_path: String,

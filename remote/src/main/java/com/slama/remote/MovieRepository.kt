@@ -15,9 +15,6 @@ interface MovieRepository {
 
             return NowPlayingMoviesRequest(RemoteService.getRemoteEndpoints())
                 .execute(apiKey, page)
-
         }
     }
-
-
 }
