@@ -21,7 +21,11 @@ class MainListActivity : AppCompatActivity() {
     private lateinit var viewModel: MainListViewModel
     private lateinit var repository: MovieRepository
     private val disposables = CompositeDisposable()
-    private val adapter = MainListAdapter()
+
+    private val adapter by lazy {
+        MainListAdapter(resources.getString(R.string.base_image_url))
+    }
+
     private val schedulers by lazy {
         Schedulers()
     }

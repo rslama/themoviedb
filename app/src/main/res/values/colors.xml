@@ -10,4 +10,7 @@
 
     <color name="color_movie_overview_card">#EAEAEA</color>
     <color name="color_movie_placeholder">#CCCCCC</color>
+    <color name="color_movie_list_title">@color/white</color>
+    <color name="color_movie_list_overview">@color/black</color>
+    <color name="color_movie_list_release_date">#8E8E8E</color>
 </resources>

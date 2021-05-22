@@ -41,7 +41,8 @@ internal class NowPlayingMoviesRequest(private val endpoints: RemoteService.Endp
             remoteNowPlayingMovie.title,
             remoteNowPlayingMovie.overview,
             remoteNowPlayingMovie.backdrop_path,
-            remoteNowPlayingMovie.poster_path
+            remoteNowPlayingMovie.poster_path,
+            remoteNowPlayingMovie.release_date,
         )
     }
 

@@ -6,5 +6,6 @@ data class MovieOverview(
     val title: String,
     val overview: String,
     val backgroundImagePath: String,
-    val posterImagePath : String,
+    val posterImagePath: String,
+    val releaseDate: String,
 )

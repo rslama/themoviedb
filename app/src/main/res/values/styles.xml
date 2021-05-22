@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="MovieList" parent="TextAppearance.AppCompat.Medium">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="MovieList.Title">
+        <item name="android:textColor">@color/color_movie_list_title</item>
+    </style>
+
+    <style name="MovieList.Overview">
+        <item name="android:textColor">@color/color_movie_list_overview</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+
+    <style name="MovieList.ReleaseDate"  parent="TextAppearance.AppCompat.Small">
+        <item name="android:textColor">@color/color_movie_list_release_date</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+</resources>
