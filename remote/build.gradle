@@ -37,9 +37,12 @@ dependencies {
     implementation "androidx.core:core-ktx:${androidxCoreKtxVersion}"
     implementation "androidx.appcompat:appcompat:${androidxAppcompatVersion}"
 
+    api "com.jakewharton.timber:timber:${timberLogVersion}"
+
     //network
-    implementation "com.squareup.retrofit2:retrofit:2.9.0"
-    implementation "com.squareup.retrofit2:converter-moshi:2.9.0"
+    implementation "com.squareup.retrofit2:retrofit:${retrofitVersion}"
+    implementation "com.squareup.retrofit2:converter-moshi:${retrofitVersion}"
+    implementation "com.squareup.retrofit2:adapter-rxjava3:${retrofitVersion}"
 
     //reactive
     api "io.reactivex.rxjava3:rxandroid:${rxAndroidVersion}"

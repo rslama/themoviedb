@@ -11,7 +11,7 @@ android {
     buildToolsVersion "30.0.3"
 
     defaultConfig {
-        buildConfigField "String", "app_id", privateProperties['API_KEY']
+        buildConfigField "String", "api_key", privateProperties['API_KEY']
 
         applicationId "com.slama.themoviecatalog"
         minSdk 21
