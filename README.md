@@ -5,7 +5,6 @@
     - create in project root new file with name private.properties
     - put there your TMDB API in format API_KEY="[your key here]"
 
-
 ## What is not done
 
     - caching loaded data inside repository
@@ -20,9 +19,9 @@
 
 ## Screenshots && video
 
-[Now playing movie](https://github.com/rslama/themoviedb/blob/main/screenshots/list.png)
+[![Now playing movie](https://github.com/rslama/themoviedb/blob/main/screenshots/list.png)]
 
-[Detail without collection](https://github.com/rslama/themoviedb/blob/main/screenshots/detail_without_collection.png)
+[![Detail without collection](https://github.com/rslama/themoviedb/blob/main/screenshots/detail_without_collection.png)]
 
-[Detail with collection](https://github.com/rslama/themoviedb/blob/main/screenshots/detail_with_collection.png)
+[![Detail with collection](https://github.com/rslama/themoviedb/blob/main/screenshots/detail_with_collection.png)]
 
