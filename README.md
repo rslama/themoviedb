@@ -16,6 +16,7 @@
     - but in current implementation all necessary data are in MovieOverview
     - in terms of UX would be nice to have transition on image
     - RemoteService module should contains Config for initialise OkHttpClient with cache from app module as well as pass base url from app/config.xml
+    - Way how collection's item is added in the Detail is temporary  and could be improved in production code 
 
 ## Screenshots && video
 
