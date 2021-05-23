@@ -6,7 +6,7 @@
     - put there your TMDB API in format API_KEY="[your key here]"
 
 
-#what is not done
+## What is not done
 
     - caching loaded data inside repository
     - pagination on main list
