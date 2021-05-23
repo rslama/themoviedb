@@ -19,9 +19,14 @@
 
 ## Screenshots && video
 
+### Application
+![Application](https://github.com/rslama/themoviedb/blob/main/screenshots/application.gif)
+### Now playing movies list
 ![Now playing movie](https://github.com/rslama/themoviedb/blob/main/screenshots/list.png)
-
+                           
+### Movie detail without collection
 ![Detail without collection](https://github.com/rslama/themoviedb/blob/main/screenshots/detail_without_collection.png)
 
+### Movie detail with collection
 ![Detail with collection](https://github.com/rslama/themoviedb/blob/main/screenshots/detail_with_collection.png)
 
