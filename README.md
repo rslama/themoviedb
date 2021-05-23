@@ -19,9 +19,9 @@
 
 ## Screenshots && video
 
-[![Now playing movie](https://github.com/rslama/themoviedb/blob/main/screenshots/list.png)]
+![Now playing movie](https://github.com/rslama/themoviedb/blob/main/screenshots/list.png)
 
-[![Detail without collection](https://github.com/rslama/themoviedb/blob/main/screenshots/detail_without_collection.png)]
+![Detail without collection](https://github.com/rslama/themoviedb/blob/main/screenshots/detail_without_collection.png)
 
-[![Detail with collection](https://github.com/rslama/themoviedb/blob/main/screenshots/detail_with_collection.png)]
+![Detail with collection](https://github.com/rslama/themoviedb/blob/main/screenshots/detail_with_collection.png)
 
