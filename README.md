@@ -17,3 +17,12 @@
     - but in current implementation all necessary data are in MovieOverview
     - in terms of UX would be nice to have transition on image
     - RemoteService module should contains Config for initialise OkHttpClient with cache from app module as well as pass base url from app/config.xml
+
+## Screenshots && video
+
+[Now playing movie](https://github.com/rslama/themoviedb/blob/main/screenshots/list.png)
+
+[Detail without collection](https://github.com/rslama/themoviedb/blob/main/screenshots/detail_without_collection.png)
+
+[Detail with collection](https://github.com/rslama/themoviedb/blob/main/screenshots/detail_with_collection.png)
+
