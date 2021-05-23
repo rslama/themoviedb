@@ -2,10 +2,10 @@ package com.slama.remote.requests
 
 import com.slama.remote.RemoteService
 import com.slama.remote.data.local.MovieOverview
+import com.slama.remote.data.local.Result
+import com.slama.remote.data.remote.RemoteMovieOverview
 import com.slama.remote.data.remote.RemoteNowPlayingMovies
 import io.reactivex.rxjava3.core.Observable
-import com.slama.remote.data.local.Result
-import com.slama.remote.data.remote.RemoteNowPlayingMovie
 
 internal class NowPlayingMoviesRequest(private val endpoints: RemoteService.Endpoints) {
 
@@ -34,17 +34,19 @@ internal class NowPlayingMoviesRequest(private val endpoints: RemoteService.Endp
 
     }
 
-    private fun convertSingle(remoteNowPlayingMovie: RemoteNowPlayingMovie): MovieOverview {
-        return MovieOverview(
-            remoteNowPlayingMovie.id,
-            remoteNowPlayingMovie.original_title,
-            remoteNowPlayingMovie.title,
-            remoteNowPlayingMovie.overview,
-            remoteNowPlayingMovie.backdrop_path,
-            remoteNowPlayingMovie.poster_path,
-            remoteNowPlayingMovie.release_date,
-        )
-    }
+    companion object {
+        fun convertSingle(remoteMovieOverview: RemoteMovieOverview): MovieOverview {
+            return MovieOverview(
+                remoteMovieOverview.id,
+                remoteMovieOverview.original_title,
+                remoteMovieOverview.title,
+                remoteMovieOverview.overview,
+                remoteMovieOverview.backdrop_path,
+                remoteMovieOverview.poster_path,
+                remoteMovieOverview.release_date,
+            )
+        }
 
+    }
 
 }

@@ -1,6 +1,8 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
+    id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
 }
 
 def privateProperties = new Properties()
@@ -40,14 +42,22 @@ android {
 dependencies {
 
     implementation project(':remote')
-    implementation "androidx.core:core-ktx:${androidxCoreKtxVersion}"
-    implementation "androidx.appcompat:appcompat:${androidxAppcompatVersion}"
+    implementation "androidx.core:core-ktx:$androidxCoreKtxVersion"
+    implementation "androidx.appcompat:appcompat:$androidxAppcompatVersion"
+    implementation "androidx.activity:activity-ktx:$activityVersion"
     implementation 'com.google.android.material:material:1.3.0'
+    // RecyclerView
+    implementation "androidx.recyclerview:recyclerview:$recyclerViewVersion"
+
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
     implementation 'com.github.bumptech.glide:glide:4.12.0'
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.12.0'
+    kapt 'com.github.bumptech.glide:compiler:4.12.0'
 
-    testImplementation "junit:junit:${junit4Version}"
-    androidTestImplementation "androidx.test.ext:junit:${androidxJunitVersion}"
-    androidTestImplementation "androidx.test.espresso:espresso-core:${androidExpressoCoreVersion}"
+    //hilt
+    implementation "com.google.dagger:hilt-android:$hiltVersion"
+    kapt "com.google.dagger:hilt-compiler:$hiltVersion"
+
+    testImplementation "junit:junit:$junit4Version"
+    androidTestImplementation "androidx.test.ext:junit:$androidxJunitVersion"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$androidExpressoCoreVersion"
 }

@@ -10,7 +10,7 @@ data class MovieOverview(
     val originalTitle: String,
     val title: String,
     val overview: String,
-    val backgroundImagePath: String,
-    val posterImagePath: String,
-    val releaseDate: String,
+    val backgroundImagePath: String?,
+    val posterImagePath: String?,
+    val releaseDate: String?,
 ) : Parcelable

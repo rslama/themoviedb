@@ -3,7 +3,7 @@ package com.slama.remote.data.remote
 import androidx.annotation.Keep
 
 @Keep
-internal data class RemoteNowPlayingMovie(
+internal data class RemoteMovieOverview(
     val id: Long,
     val original_title: String,
     val title: String,

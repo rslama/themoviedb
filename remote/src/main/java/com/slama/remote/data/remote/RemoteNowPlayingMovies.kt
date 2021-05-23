@@ -8,7 +8,7 @@ internal data class RemoteNowPlayingMovies(
     val page: Int,
     val total_pages: Int,
     val total_results: Int,
-    val results: List<RemoteNowPlayingMovie>
+    val results: List<RemoteMovieOverview>
 ) {
     @Keep
     data class Dates(

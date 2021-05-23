@@ -14,8 +14,31 @@
         <item name="android:textStyle">normal</item>
     </style>
 
-    <style name="MovieList.ReleaseDate"  parent="TextAppearance.AppCompat.Small">
+    <style name="MovieList.ReleaseDate" parent="TextAppearance.AppCompat.Small">
         <item name="android:textColor">@color/color_movie_list_release_date</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+
+    <style name="MovieDetail" parent="TextAppearance.AppCompat.Large">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="MovieDetail.Title">
+        <item name="android:textColor">@color/color_movie_detail_title</item>
+    </style>
+
+    <style name="MovieDetail.Overview">
+        <item name="android:textColor">@color/color_movie_detail_overview</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+
+    <style name="MovieDetail.CollectionName">
+        <item name="android:textColor">@color/color_movie_detail_overview</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="MovieDetail.PlayTime" parent="TextAppearance.AppCompat.Small">
+        <item name="android:textColor">@color/color_movie_detail_playtime</item>
         <item name="android:textStyle">normal</item>
     </style>
 </resources>

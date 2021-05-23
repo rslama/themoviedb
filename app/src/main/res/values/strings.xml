@@ -2,4 +2,5 @@
     <string name="app_name">TheMovieDB</string>
 
     <string name="item_movie_description">Movie Overview</string>
+    <string name="detail_playtime">Movie playtime: %s</string>
 </resources>

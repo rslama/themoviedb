@@ -3,34 +3,27 @@ package com.slama.themoviedb.main
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.slama.remote.MovieRepository
 import com.slama.remote.data.local.MovieOverview
-import com.slama.remote.utils.Schedulers
-import com.slama.themoviedb.BuildConfig
 import com.slama.themoviedb.R
 import com.slama.themoviedb.detail.MovieDetailActivity
 import com.slama.themoviedb.main.adapter.MainListAdapter
+import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.disposables.CompositeDisposable
-import timber.log.Timber
 
+@AndroidEntryPoint
 class MainListActivity : AppCompatActivity() {
 
-    private lateinit var viewModel: MainListViewModel
-    private lateinit var repository: MovieRepository
+    private val viewModel: MainListViewModel by viewModels()
     private val disposables = CompositeDisposable()
 
     private val adapter by lazy {
         MainListAdapter(
             resources.getString(R.string.base_image_url)
-        ) { movieOverview -> viewModel.openDetail(movieOverview) }
-    }
-
-    private val schedulers by lazy {
-        Schedulers()
+        ) { movieOverview -> openMovieDetail(movieOverview) }
     }
 
     private val loadingView by lazy {
@@ -48,16 +41,6 @@ class MainListActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main_list)
-
-        setupRecycler()
-
-        repository = MovieRepository.Impl(BuildConfig.api_key)
-
-        viewModel = ViewModelProvider(
-            this,
-            MainListViewModelProvider(repository, schedulers)
-        )
-            .get(MainListViewModel::class.java)
 
         disposables.add(
             viewModel
@@ -80,16 +63,13 @@ class MainListActivity : AppCompatActivity() {
         when (state) {
             is MainListState.Success -> updateDataset(state.result)
             is MainListState.Fail -> renderError(state.error)
-            is MainListState.Loading,
-            is MainListState.DetailOpened -> { /*no-op*/
+            is MainListState.Loading -> { /*no-op*/
             }
-            is MainListState.OpenDetail -> openMovieDetail(state.movieOverview)
         }
     }
 
     private fun openMovieDetail(movieOverview: MovieOverview) {
         startActivity(MovieDetailActivity.createIntent(this, movieOverview))
-        viewModel.detailOpened()
     }
 
     private fun renderError(error: String) {
@@ -97,8 +77,10 @@ class MainListActivity : AppCompatActivity() {
     }
 
     private fun updateDataset(result: List<MovieOverview>) {
-        Timber.d("Loaded state render")
         adapter.addItems(result)
+        //setup recycler here ensure a correct position when configuration changed
+        setupRecycler()
+
     }
 
     private fun setupRecycler() {

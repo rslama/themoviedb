@@ -1,12 +1,16 @@
 package com.slama.remote
 
+import com.slama.remote.data.remote.RemoteCollection
+import com.slama.remote.data.remote.RemoteMovieDetail
 import com.slama.remote.data.remote.RemoteNowPlayingMovies
 import io.reactivex.rxjava3.core.Observable
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.GET
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 internal object RemoteService {
@@ -18,6 +22,18 @@ internal object RemoteService {
             @Query("api_key") apiKey: String,
             @Query("page") page: Int
         ): Observable<RemoteNowPlayingMovies>
+
+        @GET("movie/{movie_id}")
+        fun getMovieDetail(
+            @Path("movie_id") movieId: Long,
+            @Query("api_key") apiKey: String
+        ): Observable<RemoteMovieDetail>
+
+        @GET("collection/{collection_id}")
+        fun getCollection(
+            @Path("collection_id") collectionId: Long,
+            @Query("api_key") apiKey: String
+        ): Observable<RemoteCollection>
     }
 
     private const val BASE_API_URL = "https://api.themoviedb.org/3/"
@@ -33,15 +49,32 @@ internal object RemoteService {
         retrofit.create(Endpoints::class.java)
     }
 
-    fun getRemoteEndpoints(): Endpoints = service
+    fun endpoints(): Endpoints = service
 
     private fun getHttpClient(): OkHttpClient {
-        val okHttpBuilder = OkHttpClient.Builder()
-        okHttpBuilder.addInterceptor { chain ->
-            val requestWithUserAgent = chain.request().newBuilder()
-                .build()
-            chain.proceed(requestWithUserAgent)
+        return OkHttpClient.Builder()
+            .addInterceptor { chain ->
+                val requestWithUserAgent = chain.request().newBuilder()
+                    .build()
+                chain.proceed(requestWithUserAgent)
+            }
+            .addInterceptor(loggingInterceptor())
+            .build()
+
+    }
+
+    private fun loggingInterceptor(): HttpLoggingInterceptor {
+        return if (BuildConfig.DEBUG) {
+            HttpLoggingInterceptor()
+                .apply {
+                    setLevel(HttpLoggingInterceptor.Level.BODY)
+                }
+
+        } else {
+            HttpLoggingInterceptor()
+                .apply {
+                    setLevel(HttpLoggingInterceptor.Level.BASIC)
+                }
         }
-        return okHttpBuilder.build()
     }
 }

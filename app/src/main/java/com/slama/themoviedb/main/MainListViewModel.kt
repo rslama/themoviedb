@@ -5,18 +5,21 @@ import com.slama.remote.MovieRepository
 import com.slama.remote.data.local.MovieOverview
 import com.slama.remote.data.local.Result
 import com.slama.remote.utils.SchedulersProvider
+import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.subjects.BehaviorSubject
+import javax.inject.Inject
 
-class MainListViewModel(
-    private val repository: MovieRepository,
-    private val schedulers: SchedulersProvider,
+
+@HiltViewModel
+class MainListViewModel @Inject constructor(
+    val repository: MovieRepository,
+    val schedulers: SchedulersProvider,
 ) : ViewModel() {
 
     private val publish = BehaviorSubject.create<MainListState>()
     private val disposables = CompositeDisposable()
-    private var lastState: MainListState = MainListState.Loading()
 
     init {
         publish.onNext(MainListState.Loading())
@@ -27,32 +30,6 @@ class MainListViewModel(
 
         return publish
             .compose(schedulers.observableTransformer())
-    }
-
-    internal fun openDetail(movieOverview: MovieOverview) {
-
-        val newState = MainListState.OpenDetail(
-            movieOverview,
-            lastState.loadingView,
-            lastState.dataView,
-            lastState.errorView
-        )
-
-        publish.onNext(newState)
-        lastState = newState
-
-    }
-
-    internal fun detailOpened() {
-
-        val newState = MainListState.DetailOpened(
-            lastState.loadingView,
-            lastState.dataView,
-            lastState.errorView
-        )
-        publish.onNext(newState)
-        lastState = newState
-
     }
 
     private fun loadMovies() {
@@ -69,7 +46,6 @@ class MainListViewModel(
             true -> MainListState.Fail(result.errorMessage ?: "")
             else -> MainListState.Success(result.value)
         }
-        this.lastState = state
         publish.onNext(state)
     }
 

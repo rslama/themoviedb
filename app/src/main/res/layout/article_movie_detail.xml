@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginStart="@dimen/detail_side_margin"
+    android:layout_marginEnd="@dimen/detail_side_margin"
+    android:fillViewport="true"
+    android:scrollbars="none">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/detail_movie_image"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/movie_detail_image_height"
+            android:background="@color/color_movie_placeholder"
+            android:contentDescription="@string/item_movie_description"
+            android:scaleType="fitXY"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/detail_movie_title"
+            style="@style/MovieDetail.Title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Movie title" />
+
+        <TextView
+            android:id="@+id/detail_movie_overview"
+            style="@style/MovieDetail.Overview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/detail_movie_image"
+            tools:text="Movie overview" />
+
+        <TextView
+            android:id="@+id/detail_movie_playtime"
+            style="@style/MovieDetail.PlayTime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/detail_movie_overview"
+            tools:text="Movie playtime" />
+
+        <View
+            android:id="@+id/detail_movie_collection_separator"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="4dp"
+            android:background="@color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/detail_movie_playtime" />
+
+        <TextView
+            android:id="@+id/detail_collection_name"
+            style="@style/MovieDetail.CollectionName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/detail_movie_collection_separator"
+            tools:text="Collection name" />
+
+        <TextView
+            android:id="@+id/detail_collection_overview"
+            style="@style/MovieDetail.Overview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/detail_collection_name"
+            tools:text="Collection name" />
+
+        <HorizontalScrollView
+            android:id="@+id/detail_collection_scrollview"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="24dp"
+            android:scrollbars="none"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/detail_collection_overview">
+
+            <LinearLayout
+                android:id="@+id/detail_collection_container"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="horizontal" />
+
+        </HorizontalScrollView>
+
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/detail_collection_group"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:constraint_referenced_ids="
+            detail_collection_name,
+            detail_collection_overview,
+            detail_movie_collection_separator,
+            detail_collection_scrollview" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>

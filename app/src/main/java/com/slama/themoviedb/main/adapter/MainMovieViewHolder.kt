@@ -1,13 +1,12 @@
 package com.slama.themoviedb.main.adapter
 
-import android.net.Uri
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.slama.remote.data.local.MovieOverview
 import com.slama.themoviedb.R
+import com.slama.themoviedb.util.ImageUtil
 
 class MainMovieViewHolder(
     itemView: View,
@@ -30,7 +29,7 @@ class MainMovieViewHolder(
         bindImage(movieOverview.backgroundImagePath)
         bindTitle(movieOverview.title)
         bindOverview(movieOverview.overview)
-        bindReleaseDate(movieOverview.releaseDate)
+        bindReleaseDate(movieOverview.releaseDate ?: "")
     }
 
     private fun bindReleaseDate(releaseDate: String) {
@@ -45,19 +44,14 @@ class MainMovieViewHolder(
         titleView.text = title
     }
 
-    private fun bindImage(backgroundImagePath: String) {
-        val imageUri = buildImageUrl(backgroundImagePath)
-        Glide
-            .with(itemView.context)
-            .load(imageUri)
-            .into(movieImageView)
+    private fun bindImage(backgroundImagePath: String?) {
+        ImageUtil.loadImageIntoView(
+            baseImageUrl,
+            backgroundImagePath,
+            movieImageView,
+            itemView.context
+        )
     }
 
-    private fun buildImageUrl(backgroundImagePath: String): Uri {
-        return Uri
-            .parse(baseImageUrl)
-            .buildUpon()
-            .appendPath(backgroundImagePath)
-            .build()
-    }
+
 }

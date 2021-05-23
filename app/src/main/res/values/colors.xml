@@ -13,4 +13,9 @@
     <color name="color_movie_list_title">@color/white</color>
     <color name="color_movie_list_overview">@color/black</color>
     <color name="color_movie_list_release_date">#8E8E8E</color>
+
+    <color name="color_movie_detail_title">@color/white</color>
+    <color name="color_movie_detail_overview">@color/black</color>
+    <color name="color_movie_detail_playtime">@color/black</color>
+    <color name="color_movie_detail_collection_view_background">#F8F7F7</color>
 </resources>
