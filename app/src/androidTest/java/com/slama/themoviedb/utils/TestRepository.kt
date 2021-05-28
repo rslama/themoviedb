@@ -4,24 +4,23 @@ import com.slama.remote.MovieRepository
 import com.slama.remote.data.local.MovieDetail
 import com.slama.remote.data.local.MovieOverview
 import com.slama.remote.data.local.Result
-import io.reactivex.rxjava3.core.Observable
 import javax.inject.Inject
 
 
 class TestRepository @Inject constructor(
     private val movieDetail: MovieDetail,
 ) : MovieRepository {
-    override fun getListOfMovies(page: Int): Observable<Result<List<MovieOverview>>> {
+    override suspend fun getListOfMovies(page: Int): Result<List<MovieOverview>> {
         TODO("Not yet implemented")
     }
 
-    override fun getMovieDetail(movieOverview: MovieOverview): Observable<MovieDetail> {
+    override suspend fun getMovieDetail(movieOverview: MovieOverview): Result<MovieDetail> {
 
-        return Observable.just(movieDetail)
+        return Result.Success(movieDetail)
     }
 
-    override fun getCollection(movieDetail: MovieDetail): Observable<MovieDetail> {
-        return Observable.just(movieDetail)
+    override suspend fun getCollection(movieDetail: MovieDetail): Result<MovieDetail> {
+        return Result.Success(movieDetail)
     }
 
 

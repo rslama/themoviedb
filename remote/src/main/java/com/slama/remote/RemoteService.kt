@@ -3,7 +3,6 @@ package com.slama.remote
 import com.slama.remote.data.remote.RemoteCollection
 import com.slama.remote.data.remote.RemoteMovieDetail
 import com.slama.remote.data.remote.RemoteNowPlayingMovies
-import io.reactivex.rxjava3.core.Observable
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -18,22 +17,23 @@ internal object RemoteService {
     interface Endpoints {
 
         @GET("movie/now_playing")
-        fun getNowPlayingMovies(
+        suspend fun getListOfPlayingMovies(
             @Query("api_key") apiKey: String,
             @Query("page") page: Int
-        ): Observable<RemoteNowPlayingMovies>
+        ): RemoteNowPlayingMovies
+
 
         @GET("movie/{movie_id}")
-        fun getMovieDetail(
+        suspend fun getMovieDetail(
             @Path("movie_id") movieId: Long,
             @Query("api_key") apiKey: String
-        ): Observable<RemoteMovieDetail>
+        ): RemoteMovieDetail
 
         @GET("collection/{collection_id}")
-        fun getCollection(
+        suspend fun getCollection(
             @Path("collection_id") collectionId: Long,
             @Query("api_key") apiKey: String
-        ): Observable<RemoteCollection>
+        ): RemoteCollection
     }
 
     private const val BASE_API_URL = "https://api.themoviedb.org/3/"

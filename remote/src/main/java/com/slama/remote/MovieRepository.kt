@@ -6,36 +6,45 @@ import com.slama.remote.data.local.Result
 import com.slama.remote.requests.CollectionRequest
 import com.slama.remote.requests.MovieDetailRequest
 import com.slama.remote.requests.NowPlayingMoviesRequest
-import io.reactivex.rxjava3.core.Observable
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
 
 interface MovieRepository {
 
-    fun getListOfMovies(page: Int = 1): Observable<Result<List<MovieOverview>>>
-    fun getMovieDetail(movieOverview: MovieOverview): Observable<MovieDetail>
-    fun getCollection(movieDetail: MovieDetail): Observable<MovieDetail>
+    suspend fun getListOfMovies(page: Int = 1): Result<List<MovieOverview>>
+    suspend fun getMovieDetail(movieOverview: MovieOverview): Result<MovieDetail>
+    suspend fun getCollection(movieDetail: MovieDetail): Result<MovieDetail>
 
-    class Impl(private val apiKey: String) : MovieRepository {
+    class Impl(
+        private val apiKey: String,
+        private val dispatcher: CoroutineDispatcher = Dispatchers.IO
+    ) : MovieRepository {
 
-        override fun getListOfMovies(page: Int): Observable<Result<List<MovieOverview>>> {
 
-            return NowPlayingMoviesRequest(RemoteService.endpoints())
+        override suspend fun getListOfMovies(page: Int): Result<List<MovieOverview>> {
+            return NowPlayingMoviesRequest(
+                RemoteService.endpoints(),
+                dispatcher
+            )
                 .execute(apiKey, page)
         }
 
-        override fun getMovieDetail(movieOverview: MovieOverview): Observable<MovieDetail> {
+        override suspend fun getMovieDetail(movieOverview: MovieOverview): Result<MovieDetail> {
 
-            return MovieDetailRequest(RemoteService.endpoints())
+            return MovieDetailRequest(RemoteService.endpoints(), dispatcher)
                 .execute(apiKey, movieOverview)
         }
 
-        override fun getCollection(movieDetail: MovieDetail): Observable<MovieDetail> {
+        override suspend fun getCollection(movieDetail: MovieDetail): Result<MovieDetail> {
             return if (movieDetail.collectionId == MovieDetail.NOT_IN_COLLECTION) {
-                Observable.just(movieDetail)
+                Result.Success(movieDetail)
             } else {
-                CollectionRequest(RemoteService.endpoints())
+                CollectionRequest(
+                    RemoteService.endpoints(),
+                    dispatcher
+                )
                     .execute(apiKey, movieDetail.collectionId, movieDetail)
             }
-
         }
     }
 }

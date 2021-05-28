@@ -1,6 +1,6 @@
 package com.slama.themoviedb.utils
 
-import com.slama.remote.utils.SchedulersProvider
+import com.slama.themoviedb.util.SchedulersProvider
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Scheduler
 import io.reactivex.rxjava3.schedulers.Schedulers

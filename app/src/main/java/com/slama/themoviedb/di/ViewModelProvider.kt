@@ -1,9 +1,9 @@
 package com.slama.themoviedb.di
 
 import com.slama.remote.MovieRepository
-import com.slama.remote.utils.Schedulers
-import com.slama.remote.utils.SchedulersProvider
 import com.slama.themoviedb.BuildConfig
+import com.slama.themoviedb.util.Schedulers
+import com.slama.themoviedb.util.SchedulersProvider
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

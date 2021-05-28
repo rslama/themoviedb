@@ -16,7 +16,7 @@ class MainMovieViewHolder(
 
     init {
         itemView.setOnClickListener {
-            onItemClickListener(adapterPosition)
+            onItemClickListener(bindingAdapterPosition)
         }
     }
 

@@ -39,16 +39,13 @@ dependencies {
     implementation "androidx.appcompat:appcompat:$androidxAppcompatVersion"
 
     api "com.jakewharton.timber:timber:$timberLogVersion"
+    api "org.jetbrains.kotlinx:kotlinx-coroutines-android:$kotlinxCoroutineVersion"
 
     //network
     implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
     implementation "com.squareup.retrofit2:converter-moshi:$retrofitVersion"
     implementation "com.squareup.retrofit2:adapter-rxjava3:$retrofitVersion"
     implementation "com.squareup.okhttp3:logging-interceptor:$okhttpVersion"
-
-    //reactive
-    api "io.reactivex.rxjava3:rxandroid:$rxAndroidVersion"
-    api "io.reactivex.rxjava3:rxjava:$rxJavaVersion"
 
     testImplementation "junit:junit:$junit4Version"
     androidTestImplementation "androidx.test.ext:junit:$androidxJunitVersion"

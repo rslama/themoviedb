@@ -4,20 +4,23 @@ import androidx.lifecycle.ViewModel
 import com.slama.remote.MovieRepository
 import com.slama.remote.data.local.MovieDetail
 import com.slama.remote.data.local.MovieOverview
-import com.slama.remote.utils.SchedulersProvider
+import com.slama.remote.data.local.Result
+import com.slama.themoviedb.main.MainListState
+import com.slama.themoviedb.util.SchedulersProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.rxjava3.core.Observable
-import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.subjects.BehaviorSubject
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class MovieDetailViewModel @Inject constructor(
-    val repository: MovieRepository,
-    val schedulers: SchedulersProvider,
+    private val repository: MovieRepository,
+    private val schedulers: SchedulersProvider,
 ) : ViewModel() {
 
-    private val disposables = CompositeDisposable()
     private val publisher = BehaviorSubject.create<MovieDetailState>()
 
     internal fun onCreate(movieOverview: MovieOverview): Observable<MovieDetailState> {
@@ -32,15 +35,31 @@ class MovieDetailViewModel @Inject constructor(
     }
 
     private fun loadMovieDetail(movieOverview: MovieOverview) {
-        disposables.add(
-            repository
+
+        CoroutineScope(Dispatchers.IO).launch {
+            val movieDetailResult = repository
                 .getMovieDetail(movieOverview)
-                .flatMap { movieDetail ->
-                    repository.getCollection(movieDetail)
+
+
+            when (movieDetailResult) {
+                is Result.GenericError -> MainListState.Fail("generic error: ${movieDetailResult.code}\n${movieDetailResult.error}")
+                is Result.NetworkError -> MainListState.Fail("network error")
+                is Result.Success -> {
+                    val collectionResponse =
+                        repository.getCollection(movieDetailResult.value)
+                    processResult(collectionResponse)
                 }
-                .compose(schedulers.observableTransformer())
-                .subscribe { doOnSuccess(it) }
-        )
+            }
+
+        }
+    }
+
+    private fun processResult(result: Result<MovieDetail>) {
+        when (result) {
+            is Result.GenericError -> MainListState.Fail("generic error: ${result.code}\n${result.error}")
+            is Result.NetworkError -> MainListState.Fail("network error")
+            is Result.Success -> doOnSuccess(result.value)
+        }
     }
 
     private fun doOnSuccess(movieDetail: MovieDetail) {
@@ -66,10 +85,5 @@ class MovieDetailViewModel @Inject constructor(
             .filter { movieOverview -> movieOverview.id != movieId })
             ?: collection
 
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        disposables.clear()
     }
 }

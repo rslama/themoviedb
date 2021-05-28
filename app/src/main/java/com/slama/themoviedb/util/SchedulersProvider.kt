@@ -1,4 +1,4 @@
-package com.slama.remote.utils
+package com.slama.themoviedb.util
 
 import io.reactivex.rxjava3.core.ObservableTransformer
 import io.reactivex.rxjava3.core.Scheduler

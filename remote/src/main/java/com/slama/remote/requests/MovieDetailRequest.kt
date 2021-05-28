@@ -3,20 +3,28 @@ package com.slama.remote.requests
 import com.slama.remote.RemoteService
 import com.slama.remote.data.local.MovieDetail
 import com.slama.remote.data.local.MovieOverview
+import com.slama.remote.data.local.Result
 import com.slama.remote.data.remote.RemoteMovieDetail
 import com.slama.remote.utils.TimeUtil
-import io.reactivex.rxjava3.core.Observable
+import kotlinx.coroutines.CoroutineDispatcher
 
-internal class MovieDetailRequest(private val remoteService: RemoteService.Endpoints) {
+internal class MovieDetailRequest(
+    private val remoteService: RemoteService.Endpoints,
+    private val dispatcher: CoroutineDispatcher
+) : Request() {
 
-    fun execute(
+    suspend fun execute(
         apiKey: String,
         movieOverview: MovieOverview
-    ): Observable<MovieDetail> {
+    ): Result<MovieDetail> {
 
-        return remoteService
-            .getMovieDetail(movieOverview.id, apiKey)
-            .map { processResponse(movieOverview, it) }
+        return saveApiCall(dispatcher) {
+            processResponse(
+                movieOverview,
+                remoteService
+                    .getMovieDetail(movieOverview.id, apiKey)
+            )
+        }
 
     }
 
